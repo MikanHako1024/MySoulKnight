@@ -42,8 +42,10 @@ public class InputManager : MonoBehaviour {
 	
 	private void FixedUpdate () {
 		axisInput.x = Input.GetAxisRaw("Horizontal");
-		axisInput.z = Input.GetAxisRaw("Vertical");
-		axisInput.y = 0;
+		//axisInput.z = Input.GetAxisRaw("Vertical");
+		//axisInput.y = 0;
+		axisInput.y = Input.GetAxisRaw("Vertical");
+		axisInput.z = 0;
 		keyDownAttack = Input.GetKey(keyAttack);
 		keyDownSkill = Input.GetKey(keySkill);
 		//Debug.Log(axisInput + ", " + keyDownAttack + ", " + keyDownSkill);

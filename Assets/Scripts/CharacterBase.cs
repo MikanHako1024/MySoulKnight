@@ -9,8 +9,8 @@ public class CharacterBase : MonoBehaviour {
 	
 	public float moveSpeed;
 	
-	[System.NonSerialized]
-	public Vector3 moveDirection;
+	//[System.NonSerialized]
+	//public Vector2 movement;
 	
 	protected Animator anim;
 
@@ -18,7 +18,7 @@ public class CharacterBase : MonoBehaviour {
 	public float currSpeed;
 
 	[System.NonSerialized]
-	public Vector3 currDirection;
+	public Vector2 currMovement;
 
 
 	protected void Start() {
@@ -32,12 +32,12 @@ public class CharacterBase : MonoBehaviour {
 	
 	protected void UpdateAnimation() {
 		if (anim != null) {
-			anim.SetFloat("speed", moveDirection.magnitude);
+			anim.SetFloat("speed", currMovement.magnitude);
 
-			if (moveDirection.x < 0) {
+			if (currMovement.x < 0) {
 				anim.SetTrigger("leftSide");
 			}
-			else if (moveDirection.x > 0) {
+			else if (currMovement.x > 0) {
 				anim.SetTrigger("rightSide");
 			}
 		}
@@ -53,12 +53,12 @@ public class CharacterBase : MonoBehaviour {
 		//Debug.Log(moveDirection + ", " + moveSpeed);
 		//DoMove(moveDirection, moveSpeed);
 		// ？分为基础值和当前值 需要修改的时候不必重写方法 只需要对当前值赋值 ...
-		DoMove(currDirection, currSpeed);
+		DoMove(currMovement, currSpeed);
 	}
 
-	public void DoMove(Vector3 move, float speed) {
-		Rigidbody rb = GetComponent<Rigidbody>();
-		if (rb != null && move != Vector3.zero) {
+	public void DoMove(Vector2 move, float speed) {
+		Rigidbody2D rb = GetComponent<Rigidbody2D>();
+		if (rb != null && move != Vector2.zero) {
 			//rb.MovePosition(move.normalized * speed * Time.fixedDeltaTime);
 			// ？移动到 而不是 相对移动 ...
 			rb.MovePosition(rb.position + move.normalized * speed * Time.fixedDeltaTime);

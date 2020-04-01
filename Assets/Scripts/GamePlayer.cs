@@ -12,8 +12,10 @@ public class GamePlayer : CharacterBase {
 	private bool needAttack;
 	private bool needSkill;
 	
-	private Vector3 lastDirection;
-	private Vector3 rollDirection;
+	private Vector2 movement;
+
+	private Vector2 lastMovement;
+	private Vector2 rollMovement;
 	private float rollSpeed;
 	private bool isRolling;
 
@@ -36,12 +38,12 @@ public class GamePlayer : CharacterBase {
 		}
 
 		//Debug.Log(isRolling + ", " + rollDirection + ", " + rollSpeed);
-		if (moveDirection != Vector3.zero) {
-			lastDirection = moveDirection;
+		if (movement != Vector2.zero) {
+			lastMovement = movement;
 		}
 
 		if (isRolling) {
-			currDirection = rollDirection;
+			currMovement = rollMovement;
 			currSpeed = rollSpeed;
 			//isRolling = false;
 			// ？这样只有在进行动画更新的那一帧才会快速移动 ...
@@ -52,7 +54,7 @@ public class GamePlayer : CharacterBase {
 			// ？改为在帧动画结束时的事件里手动停止isRolling ...
 		}
 		else {
-			currDirection = moveDirection;
+			currMovement = movement;
 			currSpeed = moveSpeed;
 		}
 		
@@ -64,7 +66,7 @@ public class GamePlayer : CharacterBase {
 		//moveDirection = inputManager.axisInput;
 		//needAttack = inputManager.keyDownAttack;
 		//needSkill = inputManager.keyDownSkill;
-		moveDirection = InputManager.axisInput;
+		movement = InputManager.axisInput;
 		needAttack = InputManager.keyDownAttack;
 		needSkill = InputManager.keyDownSkill;
 			// TODO : 笔记
@@ -81,7 +83,7 @@ public class GamePlayer : CharacterBase {
 		// ？而且是上一次有实际移动的移动方向 ...
 		// ？需要在每帧更新 ...
 		// ？而且正在滚动时 不更新上次输入方向到滚动方向 ...
-		rollDirection = lastDirection;
+		rollMovement = lastMovement;
 
 		if (anim != null) {
 			if (!isRolling) { // 暂时

@@ -53,6 +53,7 @@ public class CameraFollow : MonoBehaviour {
 		//Vector3 dist = TargetPosition() - cameraTf.position;
 		//return dist * speedRate;
 		Vector3 movement = speedRateDist * (TargetPosition() - cameraTf.position);
+		movement += targetOffset;
 		//movement += speedRateAxis * InputManager.axisInput;
 		movement += speedRateAxis * InputManager.axisInput.normalized;
 		return movement;
