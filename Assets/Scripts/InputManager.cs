@@ -22,7 +22,8 @@ public class InputManager : MonoBehaviour {
 	// ？可以在实例里 直接用成员名 访问到静态成员 ...
 	// ？用实例为静态成员更新 ...
 		// TODO : 笔记
-	public static Vector3 axisInput;
+	//public static Vector3 axisInput;
+	public static Vector2 axisInput;
 	public static bool keyDownAttack;
 	public static bool keyDownSkill;
 
@@ -45,7 +46,9 @@ public class InputManager : MonoBehaviour {
 		//axisInput.z = Input.GetAxisRaw("Vertical");
 		//axisInput.y = 0;
 		axisInput.y = Input.GetAxisRaw("Vertical");
-		axisInput.z = 0;
+		
+		axisInput = axisInput.normalized * Mathf.Min(axisInput.magnitude, 1f);
+
 		keyDownAttack = Input.GetKey(keyAttack);
 		keyDownSkill = Input.GetKey(keySkill);
 		//Debug.Log(axisInput + ", " + keyDownAttack + ", " + keyDownSkill);

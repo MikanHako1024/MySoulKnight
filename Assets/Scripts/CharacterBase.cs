@@ -61,7 +61,8 @@ public class CharacterBase : MonoBehaviour {
 		if (rb != null && move != Vector2.zero) {
 			//rb.MovePosition(move.normalized * speed * Time.fixedDeltaTime);
 			// ？移动到 而不是 相对移动 ...
-			rb.MovePosition(rb.position + move.normalized * speed * Time.fixedDeltaTime);
+			//rb.MovePosition(rb.position + move.normalized * speed * Time.fixedDeltaTime);
+			rb.MovePosition(rb.position + move * speed * Time.fixedDeltaTime);
 		}
 	}
 }

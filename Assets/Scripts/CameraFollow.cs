@@ -55,7 +55,13 @@ public class CameraFollow : MonoBehaviour {
 		Vector3 movement = speedRateDist * (TargetPosition() - cameraTf.position);
 		movement += targetOffset;
 		//movement += speedRateAxis * InputManager.axisInput;
-		movement += speedRateAxis * InputManager.axisInput.normalized;
+		//Vector3 axis = InputManager.axisInput;
+		//axis = axis.normalized * Mathf.Min(axis.magnitude, 1f);
+		//movement += speedRateAxis * axis;
+		// ？把axis的限制在长度1的代码放在InputManager的逻辑里 ...
+		//movement += speedRateAxis * (Vector3)InputManager.axisInput;
+		Vector3 axis = InputManager.axisInput;
+		movement += speedRateAxis * axis;
 		return movement;
 	}
 }

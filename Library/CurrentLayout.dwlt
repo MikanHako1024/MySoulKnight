@@ -67,10 +67,10 @@ MonoBehaviour:
     y: 0
     width: 386
     height: 620
-  m_MinSize: {x: 275, y: 271}
-  m_MaxSize: {x: 4004, y: 8021}
+  m_MinSize: {x: 279, y: 292}
+  m_MaxSize: {x: 4004, y: 8042}
   vertical: 1
-  controlID: 1243
+  controlID: 55
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -156,7 +156,7 @@ MonoBehaviour:
     y: 30
     width: 1345
     height: 620
-  m_MinSize: {x: 709, y: 471}
+  m_MinSize: {x: 713, y: 471}
   m_MaxSize: {x: 18008, y: 14021}
   vertical: 0
   controlID: 13
@@ -180,8 +180,8 @@ MonoBehaviour:
     y: 0
     width: 727
     height: 620
-  m_MinSize: {x: 202, y: 321}
-  m_MaxSize: {x: 4002, y: 8021}
+  m_MinSize: {x: 202, y: 342}
+  m_MaxSize: {x: 4002, y: 8042}
   vertical: 1
   controlID: 14
 --- !u!114 &9
@@ -254,8 +254,8 @@ MonoBehaviour:
     y: 0
     width: 386
     height: 399
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 279, y: 71}
+  m_MaxSize: {x: 4004, y: 4021}
   m_ActualView: {fileID: 20}
   m_Panes:
   - {fileID: 20}
@@ -286,7 +286,7 @@ MonoBehaviour:
   m_MinSize: {x: 232, y: 471}
   m_MaxSize: {x: 10002, y: 14021}
   vertical: 1
-  controlID: 118
+  controlID: 136
 --- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -489,8 +489,8 @@ MonoBehaviour:
     speed: 2
     m_Value: 1
   m_ShowGlobalGrid: 1
-  m_LastSceneViewRotation: {x: 0.28259623, y: -0.0014389916, z: 0.00042343562, w: 0.9592378}
-  m_LastSceneViewOrtho: 1
+  m_LastSceneViewRotation: {x: 0.08717229, y: -0.89959055, z: 0.21045254, w: 0.3726226}
+  m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
   m_LastLockedObject: {fileID: 0}
@@ -557,7 +557,7 @@ MonoBehaviour:
   m_AnimEditor: {fileID: 0}
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 3182
+  m_LastSelectedObjectID: 3148
 --- !u!114 &19
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1100,9 +1100,9 @@ MonoBehaviour:
   m_PersistentViewDataDictionary: {fileID: 0}
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 
-    m_LastClickedID: 0
-    m_ExpandedIDs: e6fbffff000000004c0c00005e0c0000
+    m_SelectedIDs: 4c0c0000
+    m_LastClickedID: 3148
+    m_ExpandedIDs: e6fbffff00000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1206,18 +1206,18 @@ MonoBehaviour:
     m_ExpandedIDs: ffffffff00000000460900007e090000cc090000400a0000420a00004c0b00005a0b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: CameraFollow
-      m_OriginalName: CameraFollow
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 1924
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 14}
     m_SearchString: 
