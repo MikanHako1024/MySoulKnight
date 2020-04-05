@@ -64,6 +64,7 @@
     <Compile Include="Assets\Scripts\BulletBase.cs" />
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\CharacterBase.cs" />
+    <Compile Include="Assets\Scripts\EmptyBullet.cs" />
     <Compile Include="Assets\Scripts\GamePlayer.cs" />
     <Compile Include="Assets\Scripts\GunBase.cs" />
     <Compile Include="Assets\Scripts\InputManager.cs" />

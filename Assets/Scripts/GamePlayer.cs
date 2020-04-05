@@ -142,6 +142,9 @@ public class GamePlayer : CharacterBase {
 	private bool needAttack {
 		get { return InputManager.keyDownAttack; }
 	}
+	
+	// 静态子弹测试用
+	//public EmptyBullet bulletPrefab2;
 
 	public void DoAttack() {
 		// ？xx对象.yy委托() ...
@@ -150,8 +153,28 @@ public class GamePlayer : CharacterBase {
 		lastAttackTime = Time.time;
 		// ？Time.timeSinceLevelLoad, Time ...
 
+		InitBullet(CreateBullet());
+
+		// 大量创建子弹测试用
+		//for (int i = 0; i < 10; i++) {
+		//	InitBullet(CreateBullet());
+		//}
+
+		// 大量创建静态子弹测试用
+		//for (int i = 0; i < 100; i++) {
+		//	EmptyBullet bullet = Instantiate<EmptyBullet>(bulletPrefab2);
+		//	bullet.transform.SetParent(null);
+		//	bullet.transform.position = transform.position;
+		//}
+	}
+
+	public BulletBase CreateBullet() {
 		BulletBase bullet = Instantiate<BulletBase>(bulletPrefab);
 		bullet.transform.SetParent(null);
+		return bullet;
+	}
+
+	public void InitBullet(BulletBase bullet) {
 		bullet.transform.position = transform.position;
 		//bullet.transform.eulerAngles = bullet.transform.eu
 		//	lastMovement == Vector2.zero ? new Vector2(1, 0) : lastMovement;
@@ -163,6 +186,7 @@ public class GamePlayer : CharacterBase {
 		bullet.transform.rotation = 
 			Quaternion.FromToRotation(new Vector3(1, 0, 0), bullet.direction);
 		///Debug.Log(bullet.transform.rotation + ", " + bullet.transform.eulerAngles);
+		
 	}
 
 	public bool canAttack {
