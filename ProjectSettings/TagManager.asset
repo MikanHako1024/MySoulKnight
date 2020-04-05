@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - InputManager
+  - Bullet
+  - Wall
+  - Box
   layers:
   - Default
   - TransparentFX
@@ -16,15 +19,15 @@ TagManager:
   - 
   - PostProcessing
   - 
-  - 
+  - wall
   - floor
+  - 
   - characters
+  - enemy
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - bullet
+  - weaponUse
+  - weaponCarry
   - 
   - 
   - 
@@ -45,6 +48,21 @@ TagManager:
   - name: floor
     uniqueID: 3439872909
     locked: 0
+  - name: enemy
+    uniqueID: 3917107251
+    locked: 0
+  - name: weaponCarry
+    uniqueID: 2864879307
+    locked: 0
   - name: characters
     uniqueID: 4161068649
+    locked: 0
+  - name: weaponUse
+    uniqueID: 1547691273
+    locked: 0
+  - name: bullet
+    uniqueID: 3482404311
+    locked: 0
+  - name: wall
+    uniqueID: 1550394843
     locked: 0

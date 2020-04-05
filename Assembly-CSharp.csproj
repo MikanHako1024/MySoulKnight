@@ -67,6 +67,9 @@
     <Compile Include="Assets\Scripts\GamePlayer.cs" />
     <Compile Include="Assets\Scripts\GunBase.cs" />
     <Compile Include="Assets\Scripts\InputManager.cs" />
+    <Compile Include="Assets\Scripts\ObjectPool.cs" />
+    <Compile Include="Assets\Scripts\ObjectPoolContainer.cs" />
+    <Compile Include="Assets\Scripts\PoolManager.cs" />
     <Compile Include="Assets\Scripts\WeaponBase.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>E:/Mikan/Working/Project_Unity/MySoulKnight/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>

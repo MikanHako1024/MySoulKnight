@@ -9,16 +9,18 @@ public class GamePlayer : CharacterBase {
 	public int maxArmor;
 	public int curArmor;
 	
-	private bool needAttack;
-	private bool needSkill;
-	
-	private Vector2 movement;
+	private Vector2 movement {
+		get { return InputManager.axisInput; }
+	}
 
-	private Vector2 lastMovement;
-	private Vector2 rollMovement;
-	private float rollSpeed;
-	private bool isRolling;
-
+	private void Update() {
+		if (needSkill) {
+			DoSkill();
+		}
+		if (needAttack && canAttack) {
+			DoAttack();
+		}
+	}
 	
 	//private new void Update() {
 	private new void FixedUpdate() {
@@ -28,14 +30,16 @@ public class GamePlayer : CharacterBase {
 		//base.Update();
 		//base.FixedUpdate();
 
-		UpdateInput();
-		
+		//UpdateInput();
+
+		/*
 		if (needSkill) {
 			DoSkill();
 		}
-		if (needAttack) {
+		if (needAttack && canAttack) {
 			DoAttack();
 		}
+		*/
 
 		//Debug.Log(isRolling + ", " + rollDirection + ", " + rollSpeed);
 		if (movement != Vector2.zero) {
@@ -59,20 +63,50 @@ public class GamePlayer : CharacterBase {
 		}
 		
 		base.FixedUpdate();
+
+		//Debug.Log(currMovement + ", " + rollMovement + ", " + movement);
 	}
 
-	private void UpdateInput() {
+	//private void UpdateInput() {
 		//InputManager inputManager = GameObject.FindGameObjectWithTag("InputManager").GetComponent<InputManager>();
 		//moveDirection = inputManager.axisInput;
 		//needAttack = inputManager.keyDownAttack;
 		//needSkill = inputManager.keyDownSkill;
-		movement = InputManager.axisInput;
-		needAttack = InputManager.keyDownAttack;
-		needSkill = InputManager.keyDownSkill;
-			// TODO : 笔记
+		//movement = InputManager.axisInput;
+		//needAttack = InputManager.keyDownAttack;
+		//needSkill = InputManager.keyDownSkill;
+		// ？改用 getter ...
 		//Debug.Log(moveDirection + ", " + needAttack + ", " + needSkill);
-	}
+	//}
+
 	
+	// --------------------------------
+	// roll
+	
+	private Vector2 lastMovement;
+	private Vector2 rollMovement;
+	private float rollSpeed;
+	private bool isRolling;
+	
+	private bool needSkill {
+		get { return InputManager.keyDownSkill; }
+	}
+
+	// ？让帧事件调用，实现获取动画帧数，与动画交互 ...
+	public void RollMove(int frame) {
+		//rollSpeed = (rollMoveParamA * frame - 2 * rollMoveParamB) * frame;
+		float[] list = new float[] { 1.4f, 1.6f, 1.9f, 2.0f, 1.6f, 1.2f };
+		float speedRate = list[frame];
+		rollSpeed = moveSpeed * speedRate; // 暂时用移动速度的倍率实现
+		//Debug.Log(rollSpeed);
+		//isRolling = (rollSpeed > 0.0);
+		isRolling = true;
+	}
+
+	public void RollMoveEnd() {
+		isRolling = false;
+	}
+
 	public void DoSkill() {
 		//Debug.Log("skill");
 		// ？xx技能.yy委托 ...
@@ -95,10 +129,46 @@ public class GamePlayer : CharacterBase {
 			}
 		}
 	}
+
+
+	// --------------------------------
+	// attack
+
+	public BulletBase bulletPrefab;
 	
+	public float attackInterval = 0.5f;
+	private float lastAttackTime = -60f;
+	
+	private bool needAttack {
+		get { return InputManager.keyDownAttack; }
+	}
+
 	public void DoAttack() {
 		// ？xx对象.yy委托() ...
-		Debug.Log("attack");
+		//Debug.Log("attack");
+
+		lastAttackTime = Time.time;
+		// ？Time.timeSinceLevelLoad, Time ...
+
+		BulletBase bullet = Instantiate<BulletBase>(bulletPrefab);
+		bullet.transform.SetParent(null);
+		bullet.transform.position = transform.position;
+		//bullet.transform.eulerAngles = bullet.transform.eu
+		//	lastMovement == Vector2.zero ? new Vector2(1, 0) : lastMovement;
+		//bullet.direction = bullet.transform.eulerAngles;
+		// ？rotation 是旋转角度 而不是方向向量 ...
+		bullet.direction = 
+			lastMovement == Vector2.zero ? new Vector2(1, 0) : lastMovement;
+		//bullet.transform.eulerAngles = new Vector3(0, 0, ...);
+		bullet.transform.rotation = 
+			Quaternion.FromToRotation(new Vector3(1, 0, 0), bullet.direction);
+		///Debug.Log(bullet.transform.rotation + ", " + bullet.transform.eulerAngles);
+	}
+
+	public bool canAttack {
+		get {
+			return Time.time - lastAttackTime > attackInterval;
+		}
 	}
 
 
@@ -106,22 +176,6 @@ public class GamePlayer : CharacterBase {
 	//		// ？new ...
 	//	base.FixedUpdate();
 	//}
-
-
-	// ？让帧事件调用，实现获取动画帧数，与动画交互 ...
-	public void RollMove(int frame) {
-		//rollSpeed = (rollMoveParamA * frame - 2 * rollMoveParamB) * frame;
-		float[] list = new float[] { 1.4f, 1.6f, 1.9f, 2.0f, 1.6f, 1.2f };
-		float speedRate = list[frame];
-		rollSpeed = moveSpeed * speedRate; // 暂时用移动速度的倍率实现
-		//Debug.Log(rollSpeed);
-		//isRolling = (rollSpeed > 0.0);
-		isRolling = true;
-	}
-
-	public void RollMoveEnd() {
-		isRolling = false;
-	}
 	
 	//public new void FixedUpdateMove() {
 	//	Debug.Log(isRolling);

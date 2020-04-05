@@ -1,0 +1,17 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CubePool : ObjectPool 
+{
+    public override GameObject Get(Vector3 pos, float lifetime)     {
+        GameObject obj;
+        obj  =  base.Get(pos, lifetime);
+
+        obj.GetComponent<Renderer>().material.color = Random.ColorHSV();
+
+        return obj;
+    }
+}
+
+// https://blog.csdn.net/A13155283231/java/article/details/92098649
