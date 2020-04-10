@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class WeaponBase : MonoBehaviour {
 	
+	[SerializeField]
+	public UnityEngine.Events.UnityEvent onAttack;
+
+	// ...
+
+
 	public delegate void TryShootDelegate();
 	public delegate void DoShootDelegate();
 	public delegate bool CanShootDelegate();
@@ -14,6 +20,12 @@ public class WeaponBase : MonoBehaviour {
 	
 	public float shootFrequency;
 	public float lastShootTime;
+
+	
+	public Sprite[] spriteList = new Sprite[1];
+	public int[] bulletList = new int[1];
+
+
 
 	private void Start () {
 		TryShootDele = TryShoot;

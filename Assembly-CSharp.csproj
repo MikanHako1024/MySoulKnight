@@ -67,11 +67,15 @@
     <Compile Include="Assets\Scripts\EmptyBullet.cs" />
     <Compile Include="Assets\Scripts\GamePlayer.cs" />
     <Compile Include="Assets\Scripts\GunBase.cs" />
+    <Compile Include="Assets\Scripts\IAttackColliderCheck.cs" />
+    <Compile Include="Assets\Scripts\IBattleBody.cs" />
     <Compile Include="Assets\Scripts\InputManager.cs" />
+    <Compile Include="Assets\Scripts\IWeaponBase.cs" />
     <Compile Include="Assets\Scripts\ObjectPool.cs" />
     <Compile Include="Assets\Scripts\ObjectPoolContainer.cs" />
     <Compile Include="Assets\Scripts\PoolManager.cs" />
     <Compile Include="Assets\Scripts\WeaponBase.cs" />
+    <Compile Include="Assets\Scripts\WenponDataManager.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>E:/Mikan/Working/Project_Unity/MySoulKnight/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
