@@ -51,6 +51,7 @@ public class WeaponBase : MonoBehaviour {
 	*/
 
 
+	#region 瞄准方向
 
 	//public void AimByTarget(Transform target) {
 	//	//AimByDirection(target.position - transform.position);
@@ -106,24 +107,17 @@ public class WeaponBase : MonoBehaviour {
 		//float angle = Vector2.Angle(Vector2.right, aimDirection);
 		//Debug.Log(angle);
 		// ？0 ~ 180
-		
+
 		// ？直接以左右区分，因为左右对称 ...
 		float angle = Vector2.Angle(Vector2.up, aimDirection);
 		Vector3 vec = new Vector3(0, aimDirection.x >= 0 ? 0 : 180, 90 - angle);
 		transform.eulerAngles = vec;
 	}
 
-
-	public delegate void ShootDelegate();
-
-	//public UnityEvent doShoot;
-
-	public void DoShoot() {
-		DoShootIfCan();
-	}
+	#endregion
 
 
-	public BulletBase bulletPrefab;
+	#region 执行射击
 
 	public float shootInterval = 0.5f;
 	private float lastShootTime = -60f;
@@ -134,8 +128,13 @@ public class WeaponBase : MonoBehaviour {
 		}
 	}
 
-	// 静态子弹测试用
-	//public EmptyBullet bulletPrefab2;
+	public delegate void ShootDelegate();
+
+	//public UnityEvent doShoot;
+
+	public void DoShoot() {
+		DoShootIfCan();
+	}
 
 	public void DoShootIfCan() {
 		if (canShoot) DoShootWithoutIf();
@@ -144,7 +143,18 @@ public class WeaponBase : MonoBehaviour {
 	public void DoShootWithoutIf() {
 		lastShootTime = Time.time;
 		InitBullet(CreateBullet(bulletPrefab));
+		//for (int i = 0; i <= 10; i++) InitBullet(CreateBullet(bulletPrefab));
 	}
+
+	#endregion
+
+
+	#region 创建子弹
+
+	public BulletBase bulletPrefab;
+
+	// 静态子弹测试用
+	//public EmptyBullet bulletPrefab2;
 
 	public BulletBase CreateBullet(BulletBase prefab) {
 		BulletBase bullet = Instantiate<BulletBase>(prefab);
@@ -157,28 +167,88 @@ public class WeaponBase : MonoBehaviour {
 		bullet.transform.position = muzzleTf.position;
 		//bullet.direction = 
 		//	lastMovement == Vector2.zero ? new Vector2(1, 0) : lastMovement;
-		bullet.direction = aimDirection;
-		bullet.transform.rotation =
-			Quaternion.FromToRotation(new Vector3(1, 0, 0), bullet.direction);
+		//bullet.direction = aimDirection;
+		//bullet.transform.rotation =
+		//	Quaternion.FromToRotation(new Vector3(1, 0, 0), bullet.direction);
+		
+		//bullet.direction = shootAngle;
+		float angle = shootAngle;
+		//Debug.Log(angle);
+		//bullet.direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+		// ？Mathf.Cos, Mathf,Sin 传入的是弧度制角度 ...
+		bullet.direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+		//bullet.transform.rotation =
+		//	Quaternion.FromToRotation(new Vector3(1, 0, 0), bullet.direction);
+		bullet.transform.eulerAngles = new Vector3(0, 0, angle);
+
+		//bullet.speed *= Random.Range(0.8f, 1.2f);
 	}
 
+	#endregion
 
-	// 子弹出现的位置
-	public Transform _muzzleTf;
+
+	#region 射击方向
+
+	public float shootVariance = 1f;
+
+	public float shootAngle {
+		get {
+			float angle = Vector2.Angle(Vector2.up, aimDirection);
+			angle = aimDirection.x >= 0 ? 90 - angle : 90 + angle;
+			return normalRandom(angle, shootVariance);
+		}
+	}
+
+	/// <summary>
+	/// 正态随机
+	/// </summary>
+	/// <param name="mean">均值</param>
+	/// <param name="variance">方差</param>
+	/// <returns>正态随机值</returns>
+	public float normalRandom(float mean, float variance) {
+		// Box Muller方法 正态随机数
+		// u, v : random[0,1]
+		// 标准正态随机 : 根号(-2ln(u)) * sin(2PI*v)
+		float u = Random.Range(0f, 1f);
+		float v = Random.Range(0f, 1f);
+		float nRand = Mathf.Sqrt(-2 * Mathf.Log(u)) * Mathf.Sin(2 * Mathf.PI * v);
+		//float nRand = Mathf.Sqrt(-2 * Mathf.Log10(u)) * Mathf.Sin(2 * Mathf.PI * v);
+		//Debug.Log(u + ", " + v + ", " + nRand + ", " + (mean + nRand * variance));
+		return mean + nRand * variance;
+	}
+
+	#endregion
+
+
+	#region 枪口
+
+	public Transform _muzzleTf; // 子弹出现的位置
 	public Transform muzzleTf {
 		get {
 			return _muzzleTf != null ? _muzzleTf : transform;
 		}
+		set {
+			_muzzleTf = value;
+		}
 	}
-	
-	private void Start() {
-		Transform[] children = GetComponentsInChildren<Transform>();
-		foreach (Transform tf in children) {
-			if (tf.name == "muzzle") {
-				_muzzleTf = tf;
-				break;
+
+	private void InitMuzzle() {
+		if (_muzzleTf == null) {
+			Transform[] children = GetComponentsInChildren<Transform>();
+			foreach (Transform tf in children) {
+				if (tf.name == "muzzle") {
+					_muzzleTf = tf;
+					break;
+				}
 			}
 		}
+	}
+
+	#endregion
+
+
+	private void Start() {
+		InitMuzzle();
 	}
 
 	private void Update() {

@@ -30,16 +30,19 @@ public class CharacterBase : MonoBehaviour {
 	//	UpdateAnimation();
 	//}
 	
-	protected void UpdateAnimation() {
+	//protected void UpdateAnimation() {
+	protected virtual void UpdateAnimation() {
 		if (anim != null) {
 			anim.SetFloat("speed", currMovement.magnitude);
 
-			if (currMovement.x < 0) {
-				anim.SetTrigger("leftSide");
-			}
-			else if (currMovement.x > 0) {
-				anim.SetTrigger("rightSide");
-			}
+			//if (currMovement.x < 0) {
+			//	anim.SetTrigger("leftSide");
+			//}
+			//else if (currMovement.x > 0) {
+			//	anim.SetTrigger("rightSide");
+			//}
+			// ？改 触发 为 数值 ...
+			anim.SetFloat("side", currMovement.x);
 		}
 	}
 
@@ -48,6 +51,8 @@ public class CharacterBase : MonoBehaviour {
 		UpdateAnimation();
 		FixedUpdateMove();
 	}
+	// ？TODO : 用UnityEvent添加需要的Update ...
+
 
 	protected void FixedUpdateMove() {
 		//Debug.Log(moveDirection + ", " + moveSpeed);

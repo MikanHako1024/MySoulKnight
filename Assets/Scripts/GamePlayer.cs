@@ -13,77 +13,9 @@ public class GamePlayer : CharacterBase {
 		get { return InputManager.axisInput; }
 	}
 
-	private void Update() {
-		if (needSkill) {
-			DoSkill();
-		}
-		//if (needAttack && canAttack) {
-		if (needAttack) {
-			DoAttack();
-		}
-	}
-	
-	//private new void Update() {
-	private new void FixedUpdate() {
-		//Debug.Log(Time.fixedDeltaTime + ", " + Time.fixedTime + ", " + Time.deltaTime);
-		// Time.timeScale
 		
-		//base.Update();
-		//base.FixedUpdate();
+	#region 技能 翻滚
 
-		//UpdateInput();
-
-		/*
-		if (needSkill) {
-			DoSkill();
-		}
-		if (needAttack && canAttack) {
-			DoAttack();
-		}
-		*/
-
-		//Debug.Log(isRolling + ", " + rollDirection + ", " + rollSpeed);
-		if (movement != Vector2.zero) {
-			lastMovement = movement;
-		}
-
-		if (isRolling) {
-			currMovement = rollMovement;
-			currSpeed = rollSpeed;
-			//isRolling = false;
-			// ？这样只有在进行动画更新的那一帧才会快速移动 ...
-			// ？而两次动画更新之间的帧不会快速移动 ...
-			// ？这样会显得有点卡顿 ...
-			// ？应该是设置在一段时间内快速移动，而不是仅仅一帧 ...
-			// 
-			// ？改为在帧动画结束时的事件里手动停止isRolling ...
-		}
-		else {
-			currMovement = movement;
-			currSpeed = moveSpeed;
-		}
-		
-		base.FixedUpdate();
-
-		//Debug.Log(currMovement + ", " + rollMovement + ", " + movement);
-	}
-
-	//private void UpdateInput() {
-		//InputManager inputManager = GameObject.FindGameObjectWithTag("InputManager").GetComponent<InputManager>();
-		//moveDirection = inputManager.axisInput;
-		//needAttack = inputManager.keyDownAttack;
-		//needSkill = inputManager.keyDownSkill;
-		//movement = InputManager.axisInput;
-		//needAttack = InputManager.keyDownAttack;
-		//needSkill = InputManager.keyDownSkill;
-		// ？改用 getter ...
-		//Debug.Log(moveDirection + ", " + needAttack + ", " + needSkill);
-	//}
-
-	
-	// --------------------------------
-	// roll
-	
 	private Vector2 lastMovement;
 	private Vector2 rollMovement;
 	private float rollSpeed;
@@ -130,10 +62,22 @@ public class GamePlayer : CharacterBase {
 			}
 		}
 	}
+	
+	//protected new void UpdateAnimation() {
+	protected override void UpdateAnimation() {
+		if (anim != null) {
+			anim.SetFloat("speed", currMovement.magnitude);
+			//anim.SetFloat("side", currMovement.x);
+			// ？玩家向左翻滚时向右轴输入 应该是优先轴输入的方向 ...
+			anim.SetFloat("side", InputManager.axisInput.x);
+		}
+	}
+
+	#endregion
 
 
-	// --------------------------------
-	// attack
+	#region 攻击
+
 	/*
 	public BulletBase bulletPrefab;
 	
@@ -209,10 +153,80 @@ public class GamePlayer : CharacterBase {
 	public WeaponBase.ShootDelegate shootDele;
 	public WeaponBase weaponUse;
 
+	#endregion
+	
+
+	private void Update() {
+		if (needSkill) {
+			DoSkill();
+		}
+		//if (needAttack && canAttack) {
+		if (needAttack) {
+			DoAttack();
+		}
+	}
+	
+	//private new void Update() {
+	private new void FixedUpdate() {
+		//Debug.Log(Time.fixedDeltaTime + ", " + Time.fixedTime + ", " + Time.deltaTime);
+		// Time.timeScale
+		
+		//base.Update();
+		//base.FixedUpdate();
+
+		//UpdateInput();
+
+		/*
+		if (needSkill) {
+			DoSkill();
+		}
+		if (needAttack && canAttack) {
+			DoAttack();
+		}
+		*/
+
+		//Debug.Log(isRolling + ", " + rollDirection + ", " + rollSpeed);
+		if (movement != Vector2.zero) {
+			lastMovement = movement;
+		}
+
+		if (isRolling) {
+			currMovement = rollMovement;
+			currSpeed = rollSpeed;
+			//isRolling = false;
+			// ？这样只有在进行动画更新的那一帧才会快速移动 ...
+			// ？而两次动画更新之间的帧不会快速移动 ...
+			// ？这样会显得有点卡顿 ...
+			// ？应该是设置在一段时间内快速移动，而不是仅仅一帧 ...
+			// 
+			// ？改为在帧动画结束时的事件里手动停止isRolling ...
+		}
+		else {
+			currMovement = movement;
+			currSpeed = moveSpeed;
+		}
+		
+		base.FixedUpdate();
+
+		//Debug.Log(currMovement + ", " + rollMovement + ", " + movement);
+	}
+
 	private new void Start() {
 		base.Start();
 		shootDele = weaponUse.DoShoot;
 	}
+
+	//private void UpdateInput() {
+	//	InputManager inputManager = GameObject.FindGameObjectWithTag("InputManager").GetComponent<InputManager>();
+	//	moveDirection = inputManager.axisInput;
+	//	needAttack = inputManager.keyDownAttack;
+	//	needSkill = inputManager.keyDownSkill;
+	//	movement = InputManager.axisInput;
+	//	needAttack = InputManager.keyDownAttack;
+	//	needSkill = InputManager.keyDownSkill;
+	//	// ？改用 getter ...
+	//	Debug.Log(moveDirection + ", " + needAttack + ", " + needSkill);
+	//}
 
 	//private new void FixedUpdate() {
 	//		// ？new ...
