@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BulletBase : MonoBehaviour {
 
@@ -51,7 +52,7 @@ public class BulletBase : MonoBehaviour {
 
 	//private void OnCollisionEnter2D(Collision2D collision) {
 	private void OnTriggerEnter2D(Collider2D collider) {
-		Debug.Log(collider.transform.tag);
+		//Debug.Log(collider.transform.tag);
 		switch (collider.transform.tag) {
 			//case "wall":
 			// 注意区分大小写
@@ -73,9 +74,23 @@ public class BulletBase : MonoBehaviour {
 
 	private void OnTriggerWall(Collider2D collider) {
 		isStop = true;
-		//Destroy(this);
 		//Debug.Log(11);
+		//Destroy(this, 2);
+		//StartCoroutine("DestroyCoroutine");
+		//StartCoroutine("DestroyCoroutine", this);
+		gameObject.GetComponent<SpriteRenderer>().enabled = false;
+		InitSmoke(CreateSmoke());
+		// 暂时这样
+		//Debug.Log(22);
 	}
+	
+	//IEnumerable DestroyCoroutine(GameObject go) {
+	//IEnumerable DestroyCoroutine() {
+	//	yield return 1;
+	//	//Destroy(go);
+	//	Destroy(this);
+	//	Debug.Log(22);
+	//}
 
 	private void OnTriggerEnemy(CharacterBase enemy) {
 
@@ -89,6 +104,32 @@ public class BulletBase : MonoBehaviour {
 	
 	public void DestroyMe() {
 		isStop = true;
+		gameObject.SetActive(false);
+		GameObject.Destroy(this);
 		Debug.Log("destroy me");
+	}
+	
+	//public UnityEngine.Events.UnityEvent e1;
+	//public UnityEngine.Events.UnityEvent<int> e2;
+	
+	public UnityEvent onCreate;
+	public UnityEvent onUpdate;
+	public UnityEvent onTrigWall;
+	//public UnityEvent onTrigEnemy;
+	//public UnityEvent onTrigBox;
+	//public UnityEvent onTrigPlayer;
+	public UnityEvent onDestory;
+
+	public GameObject smokePrefab;
+	
+	public GameObject CreateSmoke() {
+		GameObject smoke = Instantiate(smokePrefab);
+		smoke.transform.SetParent(null);
+		return smoke;
+	}
+
+	public void InitSmoke(GameObject smoke) {
+		smoke.transform.position = transform.position;
+		smoke.GetComponent<Animator>().SetTrigger("start");
 	}
 }

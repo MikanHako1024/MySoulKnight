@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IWeaponBase : MonoBehaviour {
+//public interface IWeaponView {
+//	void Update();
+//}
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+public abstract class WeaponView {
+	public abstract void Update();
 }
+
+// abstract, extern, partial

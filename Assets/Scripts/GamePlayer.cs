@@ -17,7 +17,8 @@ public class GamePlayer : CharacterBase {
 		if (needSkill) {
 			DoSkill();
 		}
-		if (needAttack && canAttack) {
+		//if (needAttack && canAttack) {
+		if (needAttack) {
 			DoAttack();
 		}
 	}
@@ -133,7 +134,7 @@ public class GamePlayer : CharacterBase {
 
 	// --------------------------------
 	// attack
-
+	/*
 	public BulletBase bulletPrefab;
 	
 	public float attackInterval = 0.5f;
@@ -185,7 +186,7 @@ public class GamePlayer : CharacterBase {
 		//bullet.transform.eulerAngles = new Vector3(0, 0, ...);
 		bullet.transform.rotation = 
 			Quaternion.FromToRotation(new Vector3(1, 0, 0), bullet.direction);
-		///Debug.Log(bullet.transform.rotation + ", " + bullet.transform.eulerAngles);
+		//Debug.Log(bullet.transform.rotation + ", " + bullet.transform.eulerAngles);
 		
 	}
 
@@ -194,13 +195,30 @@ public class GamePlayer : CharacterBase {
 			return Time.time - lastAttackTime > attackInterval;
 		}
 	}
+	*/
+	// 移至武器的类里
 
+	private bool needAttack {
+		get { return InputManager.keyDownAttack; }
+	}
+
+	public void DoAttack() {
+		shootDele();
+	}
+
+	public WeaponBase.ShootDelegate shootDele;
+	public WeaponBase weaponUse;
+
+	private new void Start() {
+		base.Start();
+		shootDele = weaponUse.DoShoot;
+	}
 
 	//private new void FixedUpdate() {
 	//		// ？new ...
 	//	base.FixedUpdate();
 	//}
-	
+
 	//public new void FixedUpdateMove() {
 	//	Debug.Log(isRolling);
 	//	if (isRolling) {

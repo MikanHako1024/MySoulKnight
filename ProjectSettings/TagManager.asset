@@ -19,6 +19,12 @@ TagManager:
   - 
   - PostProcessing
   - 
+  - 
+  - 
+  - 
+  - effect
+  - 
+  - 
   - wall
   - floor
   - 
@@ -28,12 +34,6 @@ TagManager:
   - bullet
   - weaponUse
   - weaponCarry
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
   - 
   - 
   - 
@@ -65,4 +65,7 @@ TagManager:
     locked: 0
   - name: wall
     uniqueID: 1550394843
+    locked: 0
+  - name: effect
+    uniqueID: 467729419
     locked: 0

@@ -27,6 +27,10 @@ public class InputManager : MonoBehaviour {
 	public static bool keyDownAttack;
 	public static bool keyDownSkill;
 
+	// ？在InputManager中添加一项 用于获取上一次的非0轴输入 ...
+	// ？因为不止有玩家需要上一次的非0轴输入，玩家武器也要 ...
+	// ？但是 其他人物及其武器的方向基于人物base，不基于InputManager ...
+	public static Vector2 lastAxisInput = new Vector2(1, 0);
 	
 	//private static void Update () {
 		// ？不能自动执行 ...
@@ -48,6 +52,7 @@ public class InputManager : MonoBehaviour {
 		axisInput.y = Input.GetAxisRaw("Vertical");
 		
 		axisInput = axisInput.normalized * Mathf.Min(axisInput.magnitude, 1f);
+		if (axisInput != Vector2.zero) lastAxisInput = axisInput;
 
 		keyDownAttack = Input.GetKey(keyAttack);
 		keyDownSkill = Input.GetKey(keySkill);
