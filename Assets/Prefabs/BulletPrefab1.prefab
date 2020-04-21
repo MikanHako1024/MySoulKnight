@@ -114,7 +114,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  smokePrefab: {fileID: 1092043175533720, guid: 9a9a20171c024834ba9669bdbbbd62f0,
+  smokePrefab: {fileID: 114362810630037630, guid: 9a9a20171c024834ba9669bdbbbd62f0,
     type: 2}
 --- !u!212 &212352329257342986
 SpriteRenderer:

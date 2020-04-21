@@ -74,6 +74,7 @@
     <Compile Include="Assets\Scripts\ObjectPool.cs" />
     <Compile Include="Assets\Scripts\ObjectPoolContainer.cs" />
     <Compile Include="Assets\Scripts\PoolManager.cs" />
+    <Compile Include="Assets\Scripts\Smoke.cs" />
     <Compile Include="Assets\Scripts\WeaponBase.cs" />
     <Compile Include="Assets\Scripts\WenponDataManager.cs" />
     <Reference Include="UnityEditor.StandardEvents">

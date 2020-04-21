@@ -144,24 +144,42 @@ public class WeaponBase : MonoBehaviour {
 		lastShootTime = Time.time;
 		InitBullet(CreateBullet(bulletPrefab));
 		//for (int i = 0; i <= 10; i++) InitBullet(CreateBullet(bulletPrefab));
+		//InitBullet(CreateBullet(bulletPoolName));
 	}
 
 	#endregion
 
 
 	#region 创建子弹
-
+	
 	public BulletBase bulletPrefab;
+	//public string bulletPoolName;
 
 	// 静态子弹测试用
 	//public EmptyBullet bulletPrefab2;
 
 	public BulletBase CreateBullet(BulletBase prefab) {
-		BulletBase bullet = Instantiate<BulletBase>(prefab);
-		//bullet.transform.SetParent(null);
-		return bullet;
+		//BulletBase bullet = Instantiate<BulletBase>(prefab);
+		////bullet.transform.SetParent(null);
+		//return bullet;
+
+		// 改用对象池管理
+		//return PoolManager.Get(prefab).gameObject;
+		//return PoolManager.Get(prefab).GetComponent<BulletBase>();
+		// ？TODO : 改用更好的方法 避免进行GetComponent ...
+
+		return PoolManager.Get<BulletBase>(prefab);
 	}
 
+	//public BulletBase CreateBullet(string bulletName) {
+	//	//return PoolManager.Get(bulletName).GetComponent<BulletBase>();
+	//	//return PoolManager.Get(bulletName);
+	//	//return PoolManager.Get(bulletName) as BulletBase;
+	//	//return PoolManager.Get(bulletName).gameObject.GetComponent<BulletBase>();
+	//	return PoolManager.Get(bulletName);
+	//}
+
+	/*
 	public void InitBullet(BulletBase bullet) {
 		//bullet.transform.position = transform.position;
 		bullet.transform.position = muzzleTf.position;
@@ -181,7 +199,17 @@ public class WeaponBase : MonoBehaviour {
 		//	Quaternion.FromToRotation(new Vector3(1, 0, 0), bullet.direction);
 		bullet.transform.eulerAngles = new Vector3(0, 0, angle);
 
+		bullet.isStop = false;
+
+		//BulletBase.temp1 = null;
+
 		//bullet.speed *= Random.Range(0.8f, 1.2f);
+	}
+	*/
+	// ？TODO : 把子弹的初始化放进子弹的方法 ...
+	// ？改 在调用处实现初始化子弹 为 调用子弹的初始化方法传入初始化参数 ...
+	public void InitBullet(BulletBase bullet) {
+		bullet.Init(muzzleTf.position, shootAngle);
 	}
 
 	#endregion

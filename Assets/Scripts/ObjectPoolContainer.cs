@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPoolContainer<T> : MonoBehaviour {
+// ？TODO : 是否要 在对象容器中保存 所在池的名称或引用 ...
+
+public class ObjectPoolContainer<T> where T : Component {
+		// ？Component 还是 MonoBehaviour ...
 
 	public T item { get; set; }
 	private bool isUsed = false;
@@ -12,16 +15,14 @@ public class ObjectPoolContainer<T> : MonoBehaviour {
 		isUsed = false;
 	}
 	
-	//public void Consume() {
-	//	isUsed = true;
-	//}
 	public T Consume() {
 		isUsed = true;
+		item.gameObject.SetActive(true);
 		return item;
 	}
 
 	public void Release() {
 		isUsed = false;
-		// ...
+		item.gameObject.SetActive(false);
 	}
 }
